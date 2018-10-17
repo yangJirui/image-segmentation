@@ -1,9 +1,12 @@
-import Image
+# -*-coding: utf-8 -*-
+
+from PIL import Image
 import sys
 from graph import build_graph, segment_graph
 from smooth_filter import gaussian_grid, filter_image
 from random import random
 from numpy import sqrt
+
 
 def diff_rgb(img, x1, y1, x2, y2):
     r = (img[0][x1, y1] - img[0][x2, y2]) ** 2
@@ -11,12 +14,15 @@ def diff_rgb(img, x1, y1, x2, y2):
     b = (img[2][x1, y1] - img[2][x2, y2]) ** 2
     return sqrt(r + g + b)
 
+
 def diff_grey(img, x1, y1, x2, y2):
     v = (img[x1, y1] - img[x2, y2]) ** 2
     return sqrt(v)
 
+
 def threshold(size, const):
     return (const / size)
+
 
 def generate_image(forest, width, height):
     random_color = lambda: (int(random()*255), int(random()*255), int(random()*255))
@@ -37,7 +43,7 @@ if __name__ == '__main__':
         print 'Correct usage: python main.py sigma neighborhood K min_comp_size input_file output_file'
     else:
         neighbor = int(sys.argv[2])
-        if neighbor != 4 and neighbor!= 8:
+        if neighbor != 4 and neighbor != 8:
             print 'Invalid neighborhood choosed. The acceptable values are 4 or 8.'
             print 'Segmenting with 4-neighborhood...'
 
